@@ -27,14 +27,14 @@ class _DocumentState extends State<Document> {
     return SafeArea(
       child: FutureBuilder(
         future: apiService.getDataUser(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<List<UserDataResponse>> snapshot) {
           if (snapshot.hasError) {
             return Center(
               child: Text(
                   "Something wrong with message: ${snapshot.error.toString()}"),
             );
           } else if (snapshot.connectionState == ConnectionState.done) {
-            List<UserDataResponse>? datauser = snapshot.data?.data;
+            List<UserDataResponse>? datauser = snapshot.data;
             return _buildListView(datauser!);
           } else {
             return const Center(

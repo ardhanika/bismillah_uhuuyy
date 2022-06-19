@@ -41,12 +41,13 @@ class ApiService {
   //   }
   // }
 
-  Future<UserDataResponse> getDataUser() async {
+  Future<List<UserDataResponse>> getDataUser() async {
     final token = await _loadToken();
     final _response = await _dio.get(Endpoint.getDataUser,
         options: Options(headers: {"authorization": "Bearer $token"}));
 
-    return UserDataResponse.fromJson(jsonDecode(_response.data));
+    return List<UserDataResponse>.from(
+        jsonDecode(_response.data).map((x) => UserDataResponse.fromJson(x)));
   }
 
   Future<GeneralResponse> createDataUser(StoreDataUserRequest request) async {
